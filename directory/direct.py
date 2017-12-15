@@ -122,13 +122,13 @@ def find():
                 aggdir = aggdir+ '/' +thisdir
                 # dir not exist
                 if thisdir not in curdir:
-                    return jsonify({'response':'DirNotExists', 'response_code':200, 'filename':filename, 'path':aggdir, 'directory':directory})
+                    return jsonify({'response':'DirNotExists', 'response_code':404, 'filename':filename, 'path':aggdir, 'directory':directory})
 
                 curdir = curdir[thisdir] 
                 # end of the path
                 if not subdirs:
                     if filename not in curdir['files']:
-                        return jsonify({'response':'FileNotExists', 'response_code':400, 'filename':filename, 'path':aggdir, 'directory':directory})
+                        return jsonify({'response':'FileNotExists', 'response_code':404, 'filename':filename, 'path':aggdir, 'directory':directory})
                     else:
 
                         # load in from cache
@@ -146,7 +146,7 @@ def find():
                                 # load into cache
                                 fileinfo['fcontent'] = fileContent
                                 response = requests.post('http://cache:5002/put', data=json.dumps(fileinfo))
-                                
+
                                 return jsonify({'response':'LoadInDisk','response_code':200, 'filename':filename, 'path':aggdir, 'fileContent': fileContent})
                         # if response['response']=='InCahe':
                         #     return jsonify({'response':'InCache', 'response_code':200, 'filename':filename, 'path':aggdir, 'filecontent': response['filecontent'], 'directory':directory}) 

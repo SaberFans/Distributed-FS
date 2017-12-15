@@ -1,6 +1,6 @@
 FROM python:3
 
-RUN mkdir -p /fs
+
 RUN mkdir -p /root/.ssh
 
 RUN touch /root/.ssh/known_hosts
